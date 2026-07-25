@@ -1,0 +1,127 @@
+{
+  "theme_and_art_direction": {
+    "style": "High-Contrast Swiss Brutalism / Editorial Future",
+    "vibe": "Premium, technical, aggressive yet luxurious. It should feel like an editorial fashion magazine designed for high-end audiophiles and tech enthusiasts.",
+    "theme": "Dark Mode Only",
+    "principles": [
+      "Negative Space: Massive gaps between sections (py-32, py-40) to let typography breathe.",
+      "Tension: Use stark asymmetry in product grids.",
+      "Contrast: Pure stark white typography on deep void black backgrounds.",
+      "The 'E1' Twist: No purple gradients. No soft glowing orbs. Hard lines, 1px white/10% borders, and cinematic spotlighting on products."
+    ]
+  },
+  "colors": {
+    "background": {
+      "default": "#050505",
+      "surface": "#111111",
+      "surface_hover": "#1A1A1A"
+    },
+    "text": {
+      "primary": "#F3F4F6",
+      "muted": "#888890",
+      "inverse": "#050505"
+    },
+    "accent": {
+      "primary": "#E63946",
+      "border": "rgba(255, 255, 255, 0.1)"
+    }
+  },
+  "typography": {
+    "font_families": {
+      "heading": "Syne, sans-serif",
+      "body": "Manrope, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "scale": {
+      "h1": "text-5xl sm:text-7xl lg:text-[8vw] leading-[0.85] tracking-tighter uppercase",
+      "h2": "text-4xl sm:text-5xl lg:text-6xl leading-none tracking-tight",
+      "h3": "text-2xl sm:text-3xl tracking-tight",
+      "body": "text-base sm:text-lg leading-relaxed text-[#888890]",
+      "labels": "text-xs tracking-[0.2em] uppercase font-mono"
+    },
+    "rules": [
+      "Headings MUST use tight tracking and ultra-tight line-height.",
+      "Overlines and small labels MUST use the mono font with wide tracking.",
+      "Do NOT use Inter or Roboto for headings."
+    ]
+  },
+  "layout": {
+    "grids": {
+      "manifesto": "grid-cols-1 md:grid-cols-12 gap-8 md:gap-16",
+      "products": "grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-4 md:gap-8"
+    },
+    "spacing": {
+      "section_y": "py-24 md:py-40",
+      "container_px": "px-6 md:px-12 lg:px-24"
+    }
+  },
+  "motion_and_interactions": {
+    "lenis": "MANDATORY. Wrap the entire app or main layout in @studio-freight/react-lenis for smooth momentum scrolling.",
+    "hero_kinetic_reveal": "Masked line-by-line reveal using framer-motion. Wrap each line of text in an overflow-hidden span. The inner text translates from y: '100%' to y: '0%' with a custom cubic-bezier ease (e.g., [0.76, 0, 0.24, 1]) over 1.2s.",
+    "scroll_reveals": "Use framer-motion `whileInView` for sections. Fade up slightly (y: 40 to 0) with low opacity starting point.",
+    "parallax_hero": "Use framer-motion `useScroll` and `useTransform` to make a hero background image (the abstract chrome) move at a different speed than the scroll. Add a slight mouse-follow transform for extra 3D feel.",
+    "hover_states": "Product cards: image slightly scales up (scale: 1.05), border brightness increases."
+  },
+  "components": {
+    "navigation": {
+      "style": "Crystal Glassmorphism",
+      "classes": "fixed top-0 w-full z-50 backdrop-blur-xl bg-[#050505]/60 border-b border-white/10 px-8 py-4 flex justify-between items-center"
+    },
+    "hero": {
+      "structure": "Full height (min-h-screen). Absolute positioning for the abstract 3D chrome background image (masked and parallaxed). Front layer: massive H1 masked reveal text.",
+      "instruction": "Do not center align. Left align the massive text. Bottom-left or bottom-right place a small scroll indicator."
+    },
+    "marquee": {
+      "library": "react-fast-marquee",
+      "style": "Editorial Ribbon. bg-transparent border-y border-white/10 py-4. Text: text-sm font-mono tracking-[0.2em] text-[#888890]. Separated by small '+' icons.",
+      "speed": "Slow and smooth."
+    },
+    "manifesto_chapters": {
+      "layout": "Use grid. Left col (or background): massive numbers (text-[15vw]) using `-webkit-text-stroke: 1px rgba(255,255,255,0.2)` and `color: transparent`. Right col: overlapping body text.",
+      "instruction": "This creates depth. The text should sit partially on top of the massive outline numbers."
+    },
+    "product_grid": {
+      "style": "Bento Grid Mode A (Tetris). Cllipped/spotlight frames.",
+      "card_classes": "relative group overflow-hidden bg-[#111111] p-8 flex flex-col justify-end min-h-[500px]",
+      "image_treatment": "Product image centered, heavily spotlighted (use radial-gradient background or pure black blending).",
+      "hover": "On hover, fade in 'Add to Cart' button and slightly scale image."
+    }
+  },
+  "image_urls": {
+    "hero_parallax_abstract": {
+      "url": "https://images.pexels.com/photos/31650385/pexels-photo-31650385.jpeg",
+      "description": "Abstract metallic spiral. Use as a large, subtle parallax background element in the hero."
+    },
+    "product_headphones_1": {
+      "url": "https://images.pexels.com/photos/9154411/pexels-photo-9154411.jpeg",
+      "description": "Sleek wireless headphones on dark background"
+    },
+    "product_headphones_2": {
+      "url": "https://images.unsplash.com/photo-1520170350707-b2da59970118",
+      "description": "Black wireless headphones overhead"
+    },
+    "product_speaker_1": {
+      "url": "https://images.unsplash.com/photo-1507878566509-a0dbe19677a5",
+      "description": "Black and gray portable speaker"
+    },
+    "product_speaker_2": {
+      "url": "https://images.unsplash.com/photo-1582978571763-2d039e56f0c3",
+      "description": "White/silver minimalist speaker"
+    }
+  },
+  "libraries": {
+    "mandatory": [
+      "framer-motion",
+      "@studio-freight/react-lenis",
+      "lucide-react",
+      "react-fast-marquee"
+    ]
+  },
+  "universal_guidelines": [
+    "NO DEFAULT AI SLOP: Do not use standard centered headers with generic gradients.",
+    "SPACING: Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "TRANSITIONS: You MUST NOT apply universal transition (e.g., transition: all). Add transitions to specific properties to avoid breaking Framer Motion transforms.",
+    "HTML STRUCTURE: Never center align the main App container globally.",
+    "DATA ATTRIBUTES: All interactive and key informational elements MUST include a data-testid attribute to facilitate robust automated testing."
+  ]
+}
