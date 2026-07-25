@@ -7,12 +7,21 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        heading: ['Syne', 'sans-serif'],
+        body: ['Manrope', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)'
       },
       colors: {
+        void: '#050505',
+        surface: '#111111',
+        'surface-hover': '#1a1a1a',
+        volt: '#e63946',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {

@@ -1,54 +1,68 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import "@/App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from "axios";
-import { HOME } from "@/constants/testIds";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
+import { ReactLenis } from "lenis/react";
+import { Toaster } from "sonner";
+import { CartProvider } from "@/context/CartContext";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { CartDrawer } from "@/components/CartDrawer";
+import Home from "@/pages/Home";
+import Shop from "@/pages/Shop";
+import ProductDetail from "@/pages/ProductDetail";
+import Checkout from "@/pages/Checkout";
+import OrderConfirmation from "@/pages/OrderConfirmation";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-const Home = () => {
-  const helloWorldApi = async () => {
-    try {
-      const response = await axios.get(`${API}/`);
-      console.log(response.data.message);
-    } catch (e) {
-      console.error(e, `errored out requesting / api`);
-    }
-  };
-
+function ScrollToTop() {
+  const { pathname } = useLocation();
   useEffect(() => {
-    helloWorldApi();
-  }, []);
-
-  return (
-    <div>
-      <header className="App-header">
-        <a
-          data-testid={HOME.emergentLink}
-          className="App-link"
-          href="https://emergent.sh"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src="https://avatars.githubusercontent.com/in/1201222?s=120&u=2686cf91179bbafbc7a71bfbc43004cf9ae1acea&v=4" />
-        </a>
-        <p className="mt-5">Building something incredible ~!</p>
-      </header>
-    </div>
-  );
-};
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+    <div className="App min-h-screen bg-void">
+      <div className="grain" />
+      <ReactLenis root options={{ lerp: 0.09, smoothWheel: true }}>
+        <BrowserRouter>
+          <CartProvider>
+            <ScrollToTop />
+            <Navbar />
+            <CartDrawer />
+            <main>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/magazin" element={<Shop />} />
+                <Route path="/produs/:slug" element={<ProductDetail />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/comanda/:orderNumber" element={<OrderConfirmation />} />
+              </Routes>
+            </main>
+            <Footer />
+            <Toaster
+              position="bottom-right"
+              theme="dark"
+              toastOptions={{
+                style: {
+                  background: "#111111",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: 0,
+                  color: "#f3f4f6",
+                  fontFamily: "JetBrains Mono, monospace",
+                  fontSize: "12px",
+                },
+              }}
+            />
+          </CartProvider>
+        </BrowserRouter>
+      </ReactLenis>
     </div>
   );
 }

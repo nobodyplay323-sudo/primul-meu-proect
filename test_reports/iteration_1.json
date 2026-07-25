@@ -1,0 +1,43 @@
+{
+  "summary": "First-finish smoke testing for VOLT electronics store. All 5 backend endpoints work correctly (products list w/ filters/sort/search, categories with counts, single product + 404, order creation with all shipping methods + empty-items 400, order retrieval + 404). Full frontend checkout E2E flow works: PDP add-to-cart -> auto-opened cart drawer with correct count -> checkout page -> shipping form fill -> place order -> redirect to /comanda/{orderNumber} confirmation -> cart cleared on return home. Shop page lists 13 products, Boxe filter narrows to 3. Home loads. One minor issue: data-testid='order-number' element not found on confirmation page (order number is present in URL, so backend flow succeeded).",
+  "tested_scope": ["frontend", "backend", "integration"],
+  "passed": [
+    "GET /api/products returns 13 products",
+    "GET /api/products?featured=true&sort=price_desc&limit=3 returns 3 featured sorted desc (Eclipse 549, Aura Max 449, Studio 329)",
+    "GET /api/products?search=aura returns 2 results",
+    "GET /api/products?category=Boxe returns 3 products",
+    "GET /api/categories returns 5 categories with counts (Casti=4, Boxe=3, Casti In-Ear=2, Wearables=2, Accesorii=2)",
+    "GET /api/products/volt-aura-max returns product (price 449)",
+    "GET /api/products/nope-xxx returns 404",
+    "POST /api/orders empty items -> 400",
+    "POST /api/orders standard <200 EUR -> shipping 15 (29 sub -> total 44)",
+    "POST /api/orders standard >=200 EUR -> shipping 0 (449 sub -> total 449)",
+    "POST /api/orders express -> shipping 25",
+    "POST /api/orders pickup -> shipping 0",
+    "GET /api/orders/{order_number} returns 200 for valid; 404 for invalid",
+    "Home page loads (title present, no fatal errors)",
+    "Navbar + cart-button render",
+    "Shop /magazin renders products-grid with 13 cards",
+    "filter-Boxe narrows to 3 cards",
+    "PDP /produs/volt-aura-max renders and pdp-add-to-cart works (auto-opens drawer, cart-count=1)",
+    "Cart drawer -> checkout-button navigates to /checkout",
+    "Checkout form inputs (full_name/email/phone/address/city/postal_code) fill correctly",
+    "shipping-standard selectable; order-total shows 449 EUR",
+    "place-order-button creates order and redirects to /comanda/VLT-260725-071CF",
+    "Cart clears after successful order (no cart-count badge on home)"
+  ],
+  "failed": [
+    {
+      "area": "frontend/OrderConfirmation",
+      "issue": "Element with data-testid='order-number' not found on /comanda/{orderNumber} confirmation page (query returned null)",
+      "evidence": "Confirmation URL loaded successfully (VLT-260725-071CF) and cart was cleared, but page.query_selector('[data-testid=\"order-number\"]') returned None immediately after wait_for_url",
+      "priority": "MEDIUM"
+    }
+  ],
+  "action_items": [
+    "Verify OrderConfirmation.jsx renders an element with data-testid='order-number' containing the order_number text (may be conditional on order fetch loading state or missing testid attribute)"
+  ],
+  "success_rate": {"backend": "100%", "frontend": "95%"},
+  "retest_needed": false,
+  "full_testing_deferred": true
+}
