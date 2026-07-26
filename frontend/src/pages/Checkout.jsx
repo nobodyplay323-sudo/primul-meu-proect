@@ -70,7 +70,7 @@ export default function Checkout() {
         shipping_method: shippingMethod,
       });
       clear();
-      navigate(`/comanda/${order.order_number}`);
+      navigate(`/comanda/${order.order_number}`, { state: { order } });
     } catch (err) {
       toast.error("A aparut o eroare la plasarea comenzii. Incearca din nou.");
       setSubmitting(false);

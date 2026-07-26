@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Check, ArrowRight } from "lucide-react";
 import { fetchOrder, formatPrice } from "../lib/api";
 
 export default function OrderConfirmation() {
   const { orderNumber } = useParams();
-  const [order, setOrder] = useState(null);
+  const location = useLocation();
+  const [order, setOrder] = useState(location.state?.order || null);
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (location.state?.order) return;
     fetchOrder(orderNumber)
       .then(setOrder)
       .catch(() => setNotFound(true));
-  }, [orderNumber]);
+  }, [orderNumber, location.state]);
 
   if (notFound) {
     return (
